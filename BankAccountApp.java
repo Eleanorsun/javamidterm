@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class BankAccountApp {
@@ -20,27 +21,25 @@ public class BankAccountApp {
 		while (choice.equalsIgnoreCase("y")) {
 			String transaction = Validator.getChoiceString(sc, "\nWithdrawal or deposit? (w/d): ", "w", "d");
 			String accountType = Validator.getChoiceString(sc, "Checking or saving? (c/s): ", "c", "s");
-			double amount = 0.0;
+			BigDecimal amount = null;
 
 			if (accountType.equalsIgnoreCase("c")) {
 				if (transaction.equalsIgnoreCase("d")) {
-					amount = Validator.getDoubleWithinRange(sc, "Amount?: ", 0, Double.MAX_VALUE);
+					amount = Validator.getBigDeciWithinRange(sc, "Amount?: ", new BigDecimal(0), new BigDecimal(Double.toString(Double.MAX_VALUE)));
 				} else {
-					amount = Validator.getDoubleWithinRange(sc, "Amount?: ", 0, ca.getBalance() - 1);
+					amount = Validator.getBigDeciWithinRange(sc, "Amount?: ", new BigDecimal(0), ca.withdrawLimit());
 				}
 				ca.updateAccount(transaction, amount);
 				
 			} else if (accountType.equalsIgnoreCase("s")) {
 				
 				if (transaction.equalsIgnoreCase("d")) {
-					amount = Validator.getDoubleWithinRange(sc, "Amount?: ", 0, Double.MAX_VALUE);
+					amount = Validator.getBigDeciWithinRange(sc, "Amount?: ", new BigDecimal(0), new BigDecimal(Double.toString(Double.MAX_VALUE)));
 				} else {
-					amount = Validator.getDoubleWithinRange(sc, "Amount?: ", 0, sa.getBalance());
+					amount = Validator.getBigDeciWithinRange(sc, "Amount?: ", new BigDecimal(0), sa.withdrawLimit());
 				}
 				sa.updateAccount(transaction, amount);
 			}
-			
-			
 			choice = Validator.getChoiceString(sc, "\nContinue? (y/n): ", "y", "n");
 		}
 		

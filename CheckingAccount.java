@@ -1,43 +1,46 @@
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 public class CheckingAccount extends Account{
 
-	private double checkingFee;
+	private final BigDecimal FEE = new BigDecimal("1.00");
+	private BigDecimal checkingFee;
 	private boolean hasTransaction;
-	private static NumberFormat currency = NumberFormat.getCurrencyInstance();
+	private NumberFormat currency = NumberFormat.getCurrencyInstance();
+
 	
 	public CheckingAccount() {
 		super();
-		this.checkingFee = 0.00;
+		this.checkingFee = new BigDecimal("0.00");
 		this.hasTransaction = false;
+		currency.setMinimumFractionDigits(2);
 	}
+	public BigDecimal withdrawLimit() {
+		return super.getBalance().subtract(FEE);
+	}
+	
 	@Override
-	public void updateAccount(String transaction, double amount) {
+	public void updateAccount(String transaction, BigDecimal amount) {
 		super.updateAccount(transaction, amount);
 		hasTransaction = true;
 	}
 	
-	public double getFee() {
+	public BigDecimal getFee() {
 		if (hasTransaction) {
-			this.checkingFee = 1.00;
-		} else {
-			this.checkingFee = 0.00;
-		}
+			this.checkingFee = FEE;
+		} 
 		return checkingFee;
 	}
 	
 	public String getFormattedFee() {
-		currency.setMinimumFractionDigits(2);
 		return "Checking fee:\t\t" + currency.format(this.getFee());
 	}
 	
 	public String getStartBalance() {
-		currency.setMinimumFractionDigits(2);
 		return "Checking:\t" + currency.format(getBalance());
 	}
 	public String getFinalBalance() {
-		double b = super.getBalance() - this.getFee();
-		currency.setMinimumFractionDigits(2);
+		BigDecimal b = super.getBalance().subtract(this.getFee()) ;
 		return "Checking:\t" + currency.format(b);
 		
 	}
