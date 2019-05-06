@@ -1,22 +1,22 @@
-
+import java.math.BigDecimal;
 
 public class Account {
 
-	private double balance;
+	private BigDecimal balance;
 	
 	public Account() {
-		this.balance = 1000.00;
+		this.balance = new BigDecimal("1000.00");
 	}
 	
-	private void withdraw(double amount) {
-		this.balance -= amount;
+	private void withdraw(BigDecimal amount) {
+		this.balance = balance.subtract(amount);
 	}
 	
-	private void deposit(double amount) {
-		this.balance += amount;
+	private void deposit(BigDecimal amount) {
+		this.balance = balance.add(amount);;
 	}
 	
-	public void updateAccount(String transaction, double amount) {
+	public void updateAccount(String transaction, BigDecimal amount) {
 		if (transaction.equalsIgnoreCase("w")) {
 			withdraw(amount);
 		} else if (transaction.equalsIgnoreCase("d")) {
@@ -24,7 +24,7 @@ public class Account {
 		}
 	}
 	
-	public double getBalance() {
+	public BigDecimal getBalance() {
 		return balance;
 	}
 }
