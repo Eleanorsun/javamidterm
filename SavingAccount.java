@@ -1,33 +1,33 @@
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
-public class SavingAccount extends Account {
+public class SavingAccount extends Account implements AccountConstants, AccountBehaviors {
 
-	private BigDecimal interest;
 	private NumberFormat currency = NumberFormat.getCurrencyInstance();
 
 	public SavingAccount() {
 		super();
-		this.interest = new BigDecimal("0.01");
 		currency.setMinimumFractionDigits(2);
 	}
-	public BigDecimal withdrawLimit() {
-		return super.getBalance();
-	}
-	
+
 	private BigDecimal getInterestPayment() {
-		return super.getBalance().multiply(this.interest) ;
+		return super.getBalance().multiply(INTEREST_RATE);
 	}
-	
-	public String getFormattedPayment() {
+
+	//show interest payment
+	public String getFormattedInterest() {
 		return "Saving interest payment:" + currency.format(getInterestPayment());
 	}
 
-	public String getStartBalance() {
-		return "Saving:\t\t" + currency.format(getBalance());
+	//implement below two methods in interface AccountBehaviors
+	@Override
+	public String showStartBalance() {
+		return "Saving:\t\t" + currency.format(INITIAL_BALANCE);
 	}
-	public String getFinalBalance() {
-		BigDecimal b = super.getBalance().add(this.getInterestPayment()) ;
+
+	@Override
+	public String showFinalBalance() {
+		BigDecimal b = super.getBalance().add(this.getInterestPayment());
 		return "Saving:\t\t" + currency.format(b);
 	}
 

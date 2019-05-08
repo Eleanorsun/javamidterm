@@ -1,21 +1,33 @@
 import java.math.BigDecimal;
 
-public class Account {
+public class Account implements AccountConstants {
 
 	private BigDecimal balance;
-	
+
 	public Account() {
-		this.balance = new BigDecimal("1000.00");
+		this.balance = INITIAL_BALANCE;
 	}
 	
+	public BigDecimal getBalance() {
+		return balance;
+	}
+
+	//withdraw upper limit
+	public BigDecimal withdrawLimit() {
+		return balance;
+	}
+	
+	//withdraw money
 	private void withdraw(BigDecimal amount) {
 		this.balance = balance.subtract(amount);
 	}
-	
+
+	//deposit money
 	private void deposit(BigDecimal amount) {
-		this.balance = balance.add(amount);;
+		this.balance = balance.add(amount);
 	}
-	
+
+	//update account based on transaction and money amount.
 	public void updateAccount(String transaction, BigDecimal amount) {
 		if (transaction.equalsIgnoreCase("w")) {
 			withdraw(amount);
@@ -23,8 +35,7 @@ public class Account {
 			deposit(amount);
 		}
 	}
+
 	
-	public BigDecimal getBalance() {
-		return balance;
-	}
+
 }

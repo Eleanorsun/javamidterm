@@ -12,13 +12,13 @@ public class Validator {
 			s = sc.nextLine();
 			if (s.equals("")) {
 				System.out.println("The entry is required. Try again.");
-			}else {
+			} else {
 				isValid = true;
 			}
 		}
 		return s;
 	}
-	
+
 	public static String getChoiceString(Scanner sc, String prompt, String s1, String s2) {
 		String s = "";
 		boolean isValid = false;
@@ -33,6 +33,7 @@ public class Validator {
 		return s;
 	}
 	
+	//Get BigDecimal 
 	public static BigDecimal getBigDeci(Scanner sc, String prompt) {
 		BigDecimal d = null;
 		boolean isValid = false;
@@ -48,6 +49,8 @@ public class Validator {
 		}
 		return d;
 	}
+	
+	//Get BigDecimal within range.
 	public static BigDecimal getBigDeciWithinRange(Scanner sc, String prompt, BigDecimal min, BigDecimal max) {
 		BigDecimal d = null;
 		boolean isValid = false;
@@ -62,5 +65,4 @@ public class Validator {
 		}
 		return d;
 	}
-
 }
